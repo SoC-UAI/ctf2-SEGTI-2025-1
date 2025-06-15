@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - SQL Injection Challenge</title>
+</head>
+<body>
+    <h1>Iniciar sesión</h1>
+
+    <form method="POST">
+        <label>Usuario:</label>
+        <input type="text" name="username"><br><br>
+
+        <label>Contraseña:</label>
+        <input type="password" name="password"><br><br>
+
+        <input type="submit" value="Login">
+    </form>
+
+    {% if flag %}
+        <p style="color: green;"><strong>FLAG:</strong> {{ flag }}</p>
+    {% endif %}
+
+    {% if resultado %}
+        <h3>Resultado de la consulta:</h3>
+        <ul>
+        {% for fila in resultado %}
+            <li>{{ fila }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if consulta %}
+        <h4>Consulta SQL ejecutada:</h4>
+        <code>{{ consulta }}</code>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,9 @@
+body {
+    background-color: #111;
+    color: #61dafb;
+    font-family: monospace;
+    padding: 20px;
+}
+input {
+    margin: 5px;
+}
