@@ -3,36 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <title>Login - SQL Injection Challenge</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/favicon.ico">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: #61dafb;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background-color: #333;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 1em;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            background-color: #2c2f33;
+            color: white;
+            text-align: center;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #61dafb;
+            background-color: #1a1a1a;
+            outline: none;
+        }
+
+        input[type="submit"] {
+            padding: 15px;
+            font-size: 1em;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .result-message {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #3e3e3e;
+            border-radius: 10px;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .result-message.success {
+            border: 1px solid #00ff00;
+            color: #00ff00;
+        }
+
+        .result-message.error {
+            border: 1px solid #f44336;
+            color: #f44336;
+        }
+
+        code {
+            display: block;
+            background-color: #222;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            text-align: left;
+            color: #fff;
+        }
+
+        ul {
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        .watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 12px;
+            color: #61dafb;
+            z-index: 2;
+        }
+
+        .watermark a {
+            color: #007bff;
+        }
+
+        .watermark a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>Iniciar sesión</h1>
+    <div id="particles-js"></div>
+    <div class="container">
+        <h1>Iniciar sesión</h1>
 
-    <form method="POST">
-        <label>Usuario:</label>
-        <input type="text" name="username"><br><br>
+        <form method="POST">
+            <input type="text" name="username" placeholder="Usuario">
+            <input type="password" name="password" placeholder="Contraseña">
+            <input type="submit" value="Login">
+        </form>
 
-        <label>Contraseña:</label>
-        <input type="password" name="password"><br><br>
+        {% if flag %}
+            <div class="result-message success">
+                <strong>FLAG:</strong> {{ flag }}
+            </div>
+        {% endif %}
 
-        <input type="submit" value="Login">
-    </form>
+        {% if resultado %}
+            <div class="result-message">
+                <h3>Resultado de la consulta:</h3>
+                <ul>
+                {% for fila in resultado %}
+                    <li>{{ fila }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
 
-    {% if flag %}
-        <p style="color: green;"><strong>FLAG:</strong> {{ flag }}</p>
-    {% endif %}
+        {% if consulta %}
+            <div class="result-message">
+                <h4>Consulta SQL ejecutada:</h4>
+                <code>{{ consulta }}</code>
+            </div>
+        {% endif %}
+    </div>
 
-    {% if resultado %}
-        <h3>Resultado de la consulta:</h3>
-        <ul>
-        {% for fila in resultado %}
-            <li>{{ fila }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
+    <div class="watermark">
+        Made by Bruno Reyes<br>
+        <a href="https://github.com/BrunoJReyes" target="_blank">https://github.com/BrunoJReyes</a><br>
+        Seguridad en TI 2025/1
+    </div>
 
-    {% if consulta %}
-        <h4>Consulta SQL ejecutada:</h4>
-        <code>{{ consulta }}</code>
-    {% endif %}
+    <script src="/static/js/particles.min.js" defer></script>
+    <script nonce="{{ g.nonce }}">
+        document.addEventListener("DOMContentLoaded", () => {
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS.load('particles-js', '/static/particles.json');
+            } else {
+                console.error("particlesJS no está definido.");
+            }
+        });
+    </script>
 </body>
 </html>
