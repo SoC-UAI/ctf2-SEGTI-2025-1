@@ -15,7 +15,7 @@ def init_db():
         c.execute("INSERT INTO users VALUES ('user', '1234')")
 
         c.execute("CREATE TABLE flags (id INTEGER PRIMARY KEY, flag TEXT)")
-        c.execute("INSERT INTO flags (flag) VALUES ('SEGTI{FLAG_SQLI}')")
+        c.execute("INSERT INTO flags (flag) VALUES ('segti{SQL_injEcTeD}')")
 
         c.execute("CREATE TABLE messages (id INTEGER PRIMARY KEY, content TEXT)")
         conn.commit()
@@ -84,7 +84,7 @@ def message_board():
         conn.commit()
 
         if msg.strip() == '<script>alert("XSS")</script>':
-            flag_to_display = "SEGTI{FLAG_XSS}"
+            flag_to_display = "segti{XSS_aLerT}"
 
     c.execute("SELECT content FROM messages")
     msgs = c.fetchall()
